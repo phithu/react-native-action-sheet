@@ -222,7 +222,7 @@ export default class ActionSheet extends React.Component<Props, State> {
     } else if (typeof options.cancelButtonIndex === 'number') {
       return this._onSelect(options.cancelButtonIndex);
     } else {
-      return this._animateOut(-1);
+      return this._animateOut();
     }
   };
 
@@ -234,10 +234,13 @@ export default class ActionSheet extends React.Component<Props, State> {
     }
 
     onSelect && onSelect(index);
-    return this._animateOut(index);
+    this.setState({
+      value: index,
+    });
+    return this._animateOut();
   };
 
-  _animateOut = (index: number): boolean => {
+  _animateOut = (): boolean => {
     const { isAnimating, overlayOpacity, sheetOpacity } = this.state;
 
     if (isAnimating) {
@@ -264,19 +267,9 @@ export default class ActionSheet extends React.Component<Props, State> {
       }),
     ]).start(result => {
       if (result.finished) {
-        let value = index >= 0 ? index : -1;
-        // @ts-ignore
-        if (
-          this.state.options &&
-          Array.isArray(this.state.options.options) &&
-          this.state.options.options.length - 1 === value
-        ) {
-          value = -1;
-        }
         this.setState({
           isVisible: false,
           isAnimating: false,
-          value: value,
         });
 
         if (this._deferNextShow) {
