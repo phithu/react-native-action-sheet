@@ -219,8 +219,10 @@ export default class ActionSheet extends React.Component<Props, State> {
 
     if (typeof options.cancelButtonIndex === 'undefined') {
       return;
-    } else {
+    } else if (typeof options.cancelButtonIndex === 'number') {
       return this._onSelect(options.cancelButtonIndex);
+    } else {
+      return this._animateOut(-1);
     }
   };
 
@@ -235,7 +237,7 @@ export default class ActionSheet extends React.Component<Props, State> {
     return this._animateOut(index);
   };
 
-  _animateOut = (index: number = -1): boolean => {
+  _animateOut = (index: number): boolean => {
     const { isAnimating, overlayOpacity, sheetOpacity } = this.state;
 
     if (isAnimating) {
