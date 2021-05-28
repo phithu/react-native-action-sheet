@@ -215,7 +215,7 @@ export default class ActionSheet extends React.Component<Props, State> {
   };
 
   _selectCancelButton = () => {
-    const { options } = this.state;
+    const { options, value } = this.state;
 
     if (!options) {
       return false;
@@ -226,7 +226,8 @@ export default class ActionSheet extends React.Component<Props, State> {
     } else if (typeof options.cancelButtonIndex === 'number') {
       return this._onSelect(options.cancelButtonIndex);
     } else {
-      return this._animateOut(-1);
+      const index = value >= 0 ? value : -1;
+      return this._animateOut(index);
     }
   };
 
@@ -275,7 +276,7 @@ export default class ActionSheet extends React.Component<Props, State> {
           Array.isArray(this.state.options.options) &&
           this.state.options.options.length - 1 === value
         ) {
-          value = -1;
+          value = this.state.value;
         }
         this.setState({
           isVisible: false,
