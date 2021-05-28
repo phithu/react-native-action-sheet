@@ -168,11 +168,15 @@ export default class ActionSheet extends React.Component<Props, State> {
   }
 
   showActionSheetWithOptions = (options: ActionSheetOptions, onSelect: (i: number) => void) => {
-    const { isVisible, overlayOpacity, sheetOpacity } = this.state;
+    const { isVisible, overlayOpacity, sheetOpacity, value } = this.state;
 
     if (isVisible) {
       this._deferNextShow = this.showActionSheetWithOptions.bind(this, options, onSelect);
       return;
+    }
+    let index = value >= 0 ? value : -1;
+    if (index === -1) {
+      index = options.initialIndex && options.initialIndex >= 0 ? options.initialIndex : -1;
     }
     // @ts-ignore
     this.setState({
@@ -181,7 +185,7 @@ export default class ActionSheet extends React.Component<Props, State> {
       isVisible: true,
       isAnimating: true,
       // @ts-ignore
-      value: options.initialIndex >= 0 ? options.initialIndex : -1,
+      value: index,
     });
     overlayOpacity.setValue(0);
     sheetOpacity.setValue(0);
@@ -222,7 +226,7 @@ export default class ActionSheet extends React.Component<Props, State> {
     } else if (typeof options.cancelButtonIndex === 'number') {
       return this._onSelect(options.cancelButtonIndex);
     } else {
-      return this._animateOut();
+      return this._animateOut(-1);
     }
   };
 
@@ -234,13 +238,10 @@ export default class ActionSheet extends React.Component<Props, State> {
     }
 
     onSelect && onSelect(index);
-    this.setState({
-      value: index,
-    });
-    return this._animateOut();
+    return this._animateOut(index);
   };
 
-  _animateOut = (): boolean => {
+  _animateOut = (index: number): boolean => {
     const { isAnimating, overlayOpacity, sheetOpacity } = this.state;
 
     if (isAnimating) {
@@ -267,9 +268,19 @@ export default class ActionSheet extends React.Component<Props, State> {
       }),
     ]).start(result => {
       if (result.finished) {
+        let value = index >= 0 ? index : -1;
+        // @ts-ignore
+        if (
+          this.state.options &&
+          Array.isArray(this.state.options.options) &&
+          this.state.options.options.length - 1 === value
+        ) {
+          value = -1;
+        }
         this.setState({
           isVisible: false,
           isAnimating: false,
+          value,
         });
 
         if (this._deferNextShow) {
