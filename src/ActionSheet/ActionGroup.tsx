@@ -18,6 +18,7 @@ type Props = ActionSheetOptions & {
   onSelect: (i: number) => boolean;
   startIndex: number;
   length: number;
+  value: number
 };
 
 const BLACK_54PC_TRANSPARENT = '#0000008a';
@@ -37,7 +38,7 @@ const focusViewOnRender = (ref: React.Component | null) => {
         UIManager.sendAccessibilityEvent(
           reactTag,
           // @ts-ignore: AccessibilityEventTypes is missing from @types/react-native
-          UIManager.AccessibilityEventTypes.typeViewFocused
+          UIManager.AccessibilityEventTypes.typeViewFocused,
         );
       } else {
         AccessibilityInfo.setAccessibilityFocus(reactTag);
@@ -96,11 +97,12 @@ export default class ActionGroup extends React.Component<Props> {
 
     if (typeof iconSource === 'number') {
       const iconStyle = [styles.icon, { tintColor: tintIcons ? color : undefined }];
-      return <Image fadeDuration={0} source={iconSource} resizeMode="contain" style={iconStyle} />;
+      return <Image fadeDuration={0} source={iconSource} resizeMode='contain' style={iconStyle} />;
     } else {
       return <View style={styles.icon}>{iconSource}</View>;
     }
   };
+
 
   _renderOptionViews = () => {
     const {
@@ -115,11 +117,12 @@ export default class ActionGroup extends React.Component<Props> {
       tintColor,
       autoFocus,
       showSeparators,
+      value,
     } = this.props;
     const optionViews: React.ReactNode[] = [];
     const nativeFeedbackBackground = TouchableNativeFeedbackSafe.Ripple(
       'rgba(180, 180, 180, 1)',
-      false
+      false,
     );
 
     for (let i = startIndex; i < startIndex + length; i++) {
@@ -137,11 +140,12 @@ export default class ActionGroup extends React.Component<Props> {
           background={nativeFeedbackBackground}
           onPress={() => onSelect(i)}
           style={styles.button}
-          accessibilityRole="button"
+          accessibilityRole='button'
           accessibilityLabel={options[i]}>
           {this._renderIconElement(iconSource, color)}
           <Text style={[styles.text, textStyle, { color }]}>{options[i]}</Text>
-        </TouchableNativeFeedbackSafe>
+          {value >= 0 && <Image style={{ width: 30, height: 30 }} source={require('../assets/check.png')} />}
+        </TouchableNativeFeedbackSafe>,
       );
 
       if (showSeparators && i < startIndex + length - 1) {
@@ -169,7 +173,7 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     marginRight: 32,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   message: {
     marginTop: 12,

@@ -19,6 +19,7 @@ interface State {
   onSelect: ((i: number) => void) | null;
   overlayOpacity: any;
   sheetOpacity: any;
+  value: number
 }
 
 interface Props {
@@ -46,6 +47,7 @@ export default class ActionSheet extends React.Component<Props, State> {
     onSelect: null,
     overlayOpacity: new Animated.Value(0),
     sheetOpacity: new Animated.Value(0),
+    value: -1,
   };
 
   _deferNextShow?: () => void = undefined;
@@ -86,7 +88,7 @@ export default class ActionSheet extends React.Component<Props, State> {
           </React.Fragment>
         )}
         {isVisible && useModal && (
-          <Modal animationType="none" transparent={true} onRequestClose={this._selectCancelButton}>
+          <Modal animationType='none' transparent={true} onRequestClose={this._selectCancelButton}>
             {overlay}
             {this._renderSheet()}
           </Modal>
@@ -96,7 +98,7 @@ export default class ActionSheet extends React.Component<Props, State> {
   }
 
   _renderSheet() {
-    const { options, isAnimating, sheetOpacity } = this.state;
+    const { options, isAnimating, sheetOpacity, value } = this.state;
 
     if (!options) {
       return null;
@@ -120,7 +122,7 @@ export default class ActionSheet extends React.Component<Props, State> {
       separatorStyle,
     } = options;
     return (
-      <TouchableWithoutFeedback importantForAccessibility="yes" onPress={this._selectCancelButton}>
+      <TouchableWithoutFeedback importantForAccessibility='yes' onPress={this._selectCancelButton}>
         <Animated.View
           needsOffscreenAlphaCompositing={isAnimating}
           style={[
@@ -157,6 +159,7 @@ export default class ActionSheet extends React.Component<Props, State> {
               showSeparators={showSeparators}
               containerStyle={containerStyle}
               separatorStyle={separatorStyle}
+              value={value}
             />
           </View>
         </Animated.View>
@@ -229,10 +232,10 @@ export default class ActionSheet extends React.Component<Props, State> {
     }
 
     onSelect && onSelect(index);
-    return this._animateOut();
+    return this._animateOut(index);
   };
 
-  _animateOut = (): boolean => {
+  _animateOut = (index?: number): boolean => {
     const { isAnimating, overlayOpacity, sheetOpacity } = this.state;
 
     if (isAnimating) {
@@ -262,6 +265,7 @@ export default class ActionSheet extends React.Component<Props, State> {
         this.setState({
           isVisible: false,
           isAnimating: false,
+          value: index,
         });
 
         if (this._deferNextShow) {
