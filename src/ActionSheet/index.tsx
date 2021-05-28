@@ -19,7 +19,7 @@ interface State {
   onSelect: ((i: number) => void) | null;
   overlayOpacity: any;
   sheetOpacity: any;
-  value: number
+  value: number;
 }
 
 interface Props {
@@ -88,7 +88,7 @@ export default class ActionSheet extends React.Component<Props, State> {
           </React.Fragment>
         )}
         {isVisible && useModal && (
-          <Modal animationType='none' transparent={true} onRequestClose={this._selectCancelButton}>
+          <Modal animationType="none" transparent={true} onRequestClose={this._selectCancelButton}>
             {overlay}
             {this._renderSheet()}
           </Modal>
@@ -122,7 +122,7 @@ export default class ActionSheet extends React.Component<Props, State> {
       separatorStyle,
     } = options;
     return (
-      <TouchableWithoutFeedback importantForAccessibility='yes' onPress={this._selectCancelButton}>
+      <TouchableWithoutFeedback importantForAccessibility="yes" onPress={this._selectCancelButton}>
         <Animated.View
           needsOffscreenAlphaCompositing={isAnimating}
           style={[
@@ -235,7 +235,7 @@ export default class ActionSheet extends React.Component<Props, State> {
     return this._animateOut(index);
   };
 
-  _animateOut = (index?: number): boolean => {
+  _animateOut = (index?: number | undefined): boolean => {
     const { isAnimating, overlayOpacity, sheetOpacity } = this.state;
 
     if (isAnimating) {
@@ -265,7 +265,7 @@ export default class ActionSheet extends React.Component<Props, State> {
         this.setState({
           isVisible: false,
           isAnimating: false,
-          value: index,
+          value: index || -1,
         });
 
         if (this._deferNextShow) {
