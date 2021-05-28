@@ -174,12 +174,14 @@ export default class ActionSheet extends React.Component<Props, State> {
       this._deferNextShow = this.showActionSheetWithOptions.bind(this, options, onSelect);
       return;
     }
-
+    // @ts-ignore
     this.setState({
       options,
       onSelect,
       isVisible: true,
       isAnimating: true,
+      // @ts-ignore
+      value: options.initialIndex >= 0 ? options.initialIndex : -1,
     });
     overlayOpacity.setValue(0);
     sheetOpacity.setValue(0);
@@ -217,10 +219,8 @@ export default class ActionSheet extends React.Component<Props, State> {
 
     if (typeof options.cancelButtonIndex === 'undefined') {
       return;
-    } else if (typeof options.cancelButtonIndex === 'number') {
-      return this._onSelect(options.cancelButtonIndex);
     } else {
-      return this._animateOut();
+      return this._onSelect(options.cancelButtonIndex);
     }
   };
 
@@ -235,7 +235,7 @@ export default class ActionSheet extends React.Component<Props, State> {
     return this._animateOut(index);
   };
 
-  _animateOut = (index?: number | undefined): boolean => {
+  _animateOut = (index: number = -1): boolean => {
     const { isAnimating, overlayOpacity, sheetOpacity } = this.state;
 
     if (isAnimating) {
@@ -262,10 +262,19 @@ export default class ActionSheet extends React.Component<Props, State> {
       }),
     ]).start(result => {
       if (result.finished) {
+        let value = index >= 0 ? index : -1;
+        // @ts-ignore
+        if (
+          this.state.options &&
+          Array.isArray(this.state.options.options) &&
+          this.state.options.options.length - 1 === value
+        ) {
+          value = -1;
+        }
         this.setState({
           isVisible: false,
           isAnimating: false,
-          value: index || -1,
+          value: value,
         });
 
         if (this._deferNextShow) {

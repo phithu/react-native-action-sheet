@@ -2,7 +2,10 @@ import * as React from 'react';
 import { TextStyle, ViewStyle } from 'react-native';
 
 export interface ActionSheetProps {
-  showActionSheetWithOptions: (options: ActionSheetOptions, callback: (i: number) => void | Promise<void>) => void;
+  showActionSheetWithOptions: (
+    options: ActionSheetOptions,
+    callback: (i: number) => void | Promise<void>
+  ) => void;
 }
 
 // for iOS
@@ -30,4 +33,5 @@ export interface ActionSheetOptions extends ActionSheetIOSOptions {
   separatorStyle?: ViewStyle;
   useModal?: boolean;
   destructiveColor?: string;
+  initialIndex?: number | undefined;
 }
