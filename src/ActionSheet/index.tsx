@@ -23,7 +23,7 @@ interface State {
 }
 
 interface Props {
-  readonly useNativeDriver: boolean | undefined;
+  readonly useNativeDriver: boolean;
   readonly pointerEvents?: ViewProps['pointerEvents'];
 }
 
