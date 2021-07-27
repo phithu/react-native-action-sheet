@@ -60,20 +60,5 @@
     "targets": [
       "typescript"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,ts,tsx}": [
-      "yarn lint",
-      "yarn fmt",
-      "git add"
-    ]
-  },
-  "dependencies": {
-    "husky": "^7.0.1"
   }
 }
