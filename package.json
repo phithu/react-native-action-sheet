@@ -1,6 +1,6 @@
 {
   "name": "@npt/react-native-action-sheet",
-  "version": "3.8.2",
+  "version": "3.9.0",
   "description": "A cross-platform ActionSheet for React Native",
   "react-native": "lib/module/index.js",
   "types": "lib/typescript/index.d.ts",
@@ -15,7 +15,8 @@
     "type-check": "tsc --noEmit",
     "lint": "eslint . --ext .ts,.tsx --fix",
     "fmt": "prettier --write \"{src,example}/**/*.{ts,tsx}\"",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "prepublish": "tsc -d --declarationDir dist/lib --declarationMap --emitDeclarationOnly"
   },
   "repository": {
     "type": "git",
