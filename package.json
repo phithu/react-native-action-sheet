@@ -1,5 +1,5 @@
 {
-  "name": "@expo/react-native-action-sheet",
+  "name": "@phithu/react-native-action-sheet",
   "version": "3.8.1",
   "description": "A cross-platform ActionSheet for React Native",
   "react-native": "lib/module/index.js",
@@ -60,8 +60,7 @@
     "output": "lib",
     "targets": [
       "commonjs",
-      "module",
-      "typescript"
+      "module"
     ]
   },
   "husky": {
