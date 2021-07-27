@@ -1,6 +1,6 @@
 {
-  "name": "@phithu/react-native-action-sheet",
-  "version": "3.8.1",
+  "name": "@npt/react-native-action-sheet",
+  "version": "3.8.2",
   "description": "A cross-platform ActionSheet for React Native",
   "react-native": "lib/module/index.js",
   "types": "lib/typescript/index.d.ts",
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/expo/react-native-action-sheet.git"
+    "url": "https://github.com/phithu/react-native-action-sheet.git"
   },
   "keywords": [
     "expo",
@@ -29,9 +29,9 @@
   "author": "Jesse Ruder <jesse@sixfivezero.net>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/expo/react-native-action-sheet/issues"
+    "url": "https://github.com/phithu/react-native-action-sheet/issues"
   },
-  "homepage": "https://github.com/expo/react-native-action-sheet",
+  "homepage": "https://github.com/phithu/react-native-action-sheet",
   "devDependencies": {
     "@react-native-community/bob": "^0.6.1",
     "@react-native-community/eslint-config": "^0.0.5",
