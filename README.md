@@ -27,7 +27,7 @@ $ yarn add @npt/react-native-action-sheet
 ### 1. Wrap your top-level component with `<ActionSheetProvider />`
 
 ```es6
-import { ActionSheetProvider } from '@expo/react-native-action-sheet';
+import { ActionSheetProvider } from '@npt/react-native-action-sheet';
 
 class AppContainer extends React.Component {
   render() {
@@ -43,7 +43,7 @@ class AppContainer extends React.Component {
 ### 2. Connect your component which uses showActionSheetWithOptions.
 
 ```es6
-import { connectActionSheet } from '@expo/react-native-action-sheet';
+import { connectActionSheet } from '@npt/react-native-action-sheet';
 
 class App extends React.Component {
   /* ... */
@@ -79,7 +79,7 @@ _onOpenActionSheet = () => {
 You can use a hook instead of the higher order component if you are on React 16.8 or newer.
 
 ```es6
-import { useActionSheet } from '@expo/react-native-action-sheet';
+import { useActionSheet } from '@npt/react-native-action-sheet';
 
 export default function App() {
   const { showActionSheetWithOptions } = useActionSheet();

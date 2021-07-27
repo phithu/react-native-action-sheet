@@ -1,13 +1,22 @@
 {
-  "include": ["src"],
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "strict": true,
-    "moduleResolution": "node",
-    "lib": ["es2015", "es2016", "esnext"],
+    // for react-native-reanimated-tests.tsx
+    "paths": {
+      "react-native-reanimated": ["./react-native-action-sheet.d.ts"]
+    },
+    // change to true after we transition to TS
+    "declaration": false,
+    "preserveSymlinks": true,
+    "target": "es6",
+    "module": "es6",
     "jsx": "react-native",
-    "esModuleInterop": true
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "lib": ["es6"],
+    "esModuleInterop": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
   },
-  "exclude": ["node_modules"]
+  "include": ["./src"]
 }
